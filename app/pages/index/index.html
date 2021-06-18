@@ -1,0 +1,12 @@
+<%= _.template(require('html-loader!../../layouts/header.html'))({
+    htmlWebpackPlugin: htmlWebpackPlugin,
+    text: {
+        title: `ВКонтакте`
+    }
+}) %>
+
+<div class="page">
+    <%= _.template(require('html-loader?&interpolate!../../components/header/header.html'))() %>
+</div>
+
+<%= _.template(require('html-loader?&interpolate!../../layouts/footer.html'))() %>
