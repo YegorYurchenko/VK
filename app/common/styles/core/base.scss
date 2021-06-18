@@ -19,28 +19,21 @@ body {
     position: relative;
     display: block;
     margin: 0;
-    background-color: color('gray');
+    background-color: color('gray-light');
 }
 
 .page {
     position: relative;
     overflow: hidden;
+    height: 100vh;
 }
 
 .main {
+    position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
-    padding: 50px 0;
-    background-color: color('white');
-    margin-top: -45px;
-    border-radius: 23px 23px 0 0;
-    transition: margin-top 0.1s ease;
-
-    &.scroll {
-        margin-top: -20px
-    }
 }
 
 button {
