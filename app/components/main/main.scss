@@ -1,0 +1,9 @@
+.main {
+    display: flex;
+    margin: 48px 0 0;
+    height: calc(100% - 48px);
+
+    &:last-child {
+        padding: 0 0 30px;
+    }
+}
