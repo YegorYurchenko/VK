@@ -1,0 +1,10 @@
+<script id="emoji-list-template" type="text/template">
+    <div class="emoji-tooltip__mainItem">
+        <div class="emoji-tooltip__mainItem-title"><%= title %></div>
+        <ul class="emoji-tooltip__mainItem-list">
+            <% items.forEach((emoji, idx) => { %>
+                <li class="emoji-tooltip__mainItem-list-item" data-part="<%- part %>" data-value="<%- idx %>"><%- emoji %></li>
+            <% }) %>
+        </ul>
+    </div>
+</script>

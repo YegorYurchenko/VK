@@ -3,10 +3,14 @@ class MessengerBottom {
         this.messenger = el;
         this.textarea = this.messenger.querySelector('.js-message-textarea');
         this.smile = this.messenger.querySelector('.js-message-smile');
+        this.emojiTooltip = this.messenger.querySelector('.js-emoji-tooltip');
 
         this.setListeners();
     }
 
+    /**
+     * Слушаем событие input и динамически изменяем высоту textarea (max-height = 200px)
+     */
     setListeners() {
         this.textarea.addEventListener('input', (e) => {
             let textarea = e.target;

@@ -8,6 +8,8 @@
 <div class="page">
     <%= _.template(require('html-loader?&interpolate!../../components/header/header.html'))() %>
     <%= _.template(require('html-loader?&interpolate!../../components/main/main.html'))() %>
+
+    <%= require('html-loader!../../components/templates/emoji-list-template.html') %>
 </div>
 
 <%= _.template(require('html-loader?&interpolate!../../layouts/footer.html'))() %>

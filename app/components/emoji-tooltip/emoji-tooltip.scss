@@ -1,0 +1,200 @@
+.emoji-tooltip {
+    position: absolute;
+    top: calc(-12px - 281px);
+    right: 0;
+    opacity: 0;
+    visibility: hidden;
+    height: 281px;
+    width: 290px;
+    border: 1px solid color('gray');
+    border-radius: 4px;
+    background-color: color('white');
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.2s ease-in-out;
+
+    &::before {
+        content: '';        
+        display: block;
+        position: absolute;
+        bottom: -9px;
+        right: 13px;
+        height: 16px;
+        width: 16px;
+        background-color: color('gray-lighter');
+        border: 1px solid color('gray');
+        clip-path: polygon(0% 0%, 100% 100%, 0% 100%);
+        transform: rotate(-45deg);
+        border-radius: 0 0 0 4px;
+    }
+
+    &.is-active {
+        opacity: 1;
+    }
+    
+    &.is-visible {
+        visibility: visible;
+    }
+
+    &__inner {
+        width: 100%;
+        height: 100%;
+    }
+
+    &__main-wrapper {
+        position: relative;
+        margin: auto;
+        padding: 4px;
+        height: 245px;
+        overflow: hidden;
+    }
+
+    &__main {
+        height: 100%;
+    }
+
+    &__mainItem {
+        margin: 0 0 10px;
+        width: 100%;
+    }
+
+    &__mainItem-title {
+        margin: 6px 0 5px 5px;
+        font-size: 13px;
+        color: color('gray-darker');
+    }
+
+    &__mainItem-list {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        width: 269px;
+        margin: 0;
+        cursor: url(/../assets/images/arrow.svg), pointer;
+    }
+
+    &__mainItem-list-item {
+        margin: 0 1px 0 0;
+        padding: calc((26px - 18.8px) / 2) calc((26px - 18.54px) / 2);
+        width: 26px;
+        height: 26px;
+        font-size: 13.5px;
+        list-style: none;
+        text-align: center;
+        border-radius: 3px;
+        background-color: color('white');
+        transition: background-color 0.1s ease-in-out;
+
+        &:hover {
+            background-color: color('gray-light');
+        }
+
+        &:nth-child(10n) {
+            margin: 0px;
+        }
+    }
+
+    &__menu {
+        display: flex;
+        justify-content: flex-start;
+        height: 34px;
+        width: 100%;
+        border-radius: 0 0 3px 3px;
+        background-color: color('gray-lighter');
+    }
+
+    &__menu-btn {
+        width: 34px;
+        height: 34px;
+        
+        &.is-active {
+            background-color: color('white');
+            border-radius: 0 0 0 3px;
+        }
+
+        &_recent {
+            &.is-active {
+            background-color: color('white');
+            border-radius: 0;
+        }
+        }
+    }
+
+    &__menu-all-svg {
+        fill: color('gray-dark');
+        pointer-events: none;
+    }
+}
+
+
+.scrollable {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+/*IE*/
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .scrollable {
+        margin-right: -10px;
+        padding-top: 32px;
+        margin-top: -32px;
+        margin-bottom: -32px;
+        padding-bottom: 32px;
+
+        /* ie scrollbar color properties */
+        scrollbar-base-color: color('white');
+        scrollbar-face-color: color('blue-light');
+        scrollbar-3dlight-color: color('blue-light');
+        scrollbar-highlight-color: color('blue-light');
+        scrollbar-track-color: color('white');
+        scrollbar-arrow-color: color('blue-light');
+        scrollbar-shadow-color: color('blue-light');
+    }
+    
+    .scrollable:after {
+        content: "";
+        height: 32px;
+        display: block;
+    }
+}
+
+/*Edge*/
+@supports (-ms-ime-align:auto)  {
+    .scrollable {
+        margin-right: -10px;
+        padding-top: 16px;
+        margin-top: -16px;
+        margin-bottom: -16px;
+        padding-bottom: 16px;
+    }
+    
+    .scrollable:after {
+        content: "";
+        height: 16px;
+        display: block;
+    }
+}
+
+/*Firefox*/
+.scrollable {
+    scrollbar-width: thin;
+    scrollbar-color: color('blue-light') color('white');
+}
+
+
+/*Chrome*/
+.scrollable::-webkit-scrollbar-track {
+    background-color: color('white');
+    border-radius: 3px;
+    width: 4px;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+    background-color: color('blue-light');
+    border-radius: 3px;
+    border: 1px solid transparent;
+    background-clip: content-box;
+}
+
+.scrollable::-webkit-scrollbar {
+    width: 6px;
+}

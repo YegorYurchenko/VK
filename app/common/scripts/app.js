@@ -2,4 +2,5 @@
 import '../styles/app.scss';
 
 // components
-import '../../components/messenger_bottom/messenger_bottom.js';
+import '../../components/messenger-bottom/messenger-bottom.js';
+import '../../components/emoji-tooltip/emoji-tooltip.js';
