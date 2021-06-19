@@ -3,7 +3,6 @@ class MessengerBottom {
         this.messenger = el;
         this.textarea = this.messenger.querySelector('.js-message-textarea');
         this.smile = this.messenger.querySelector('.js-message-smile');
-        this.emojiTooltip = this.messenger.querySelector('.js-emoji-tooltip');
 
         this.setListeners();
     }
