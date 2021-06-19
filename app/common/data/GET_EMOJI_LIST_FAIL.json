@@ -1,6 +1,6 @@
 {
     "success": true,
-    "status": "GET_EMPLOYEES_LIST_FAIL",
+    "status": "GET_EMOJI_LIST_FAIL",
     "data": {
         "errorMessage": "Ошибка"
     }
