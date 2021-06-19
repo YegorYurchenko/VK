@@ -1,0 +1,7 @@
+{
+    "success": true,
+    "status": "GET_RECENT_EMOJI_LIST_FAIL",
+    "data": {
+        "errorMessage": "Ошибка"
+    }
+}

@@ -2,8 +2,8 @@
     position: absolute;
     top: calc(-12px - 281px);
     right: 0;
+    display: none;
     opacity: 0;
-    visibility: hidden;
     height: 281px;
     width: 290px;
     border: 1px solid color('gray');
@@ -23,6 +23,7 @@
         background-color: color('gray-lighter');
         border: 1px solid color('gray');
         clip-path: polygon(0% 0%, 100% 100%, 0% 100%);
+        box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
         transform: rotate(-45deg);
         border-radius: 0 0 0 4px;
     }
@@ -32,7 +33,7 @@
     }
     
     &.is-visible {
-        visibility: visible;
+        display: block;
     }
 
     &__inner {
@@ -42,10 +43,15 @@
 
     &__main-wrapper {
         position: relative;
+        display: none;
         margin: auto;
         padding: 4px;
         height: 245px;
         overflow: hidden;
+
+        &.is-active {
+            display: block;
+        }
     }
 
     &__main {
