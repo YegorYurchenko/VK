@@ -4,7 +4,7 @@
             <div class="emoji-tooltip__mainItem-title"><%= title %></div>
         <% } %>
         <% if (items) { %> 
-            <ul class="emoji-tooltip__mainItem-list">
+            <ul class="emoji-tooltip__mainItem-list js-emoji-tooltip-list">
                 <% items.forEach((emoji, idx) => { %>
                     <li class="emoji-tooltip__mainItem-list-item" data-type="<%- type %>" data-part="<%- part %>" data-value="<%- idx %>"><%- emoji %></li>
                 <% }) %>
