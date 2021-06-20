@@ -5,6 +5,8 @@ class EmojiTooltip {
     constructor(el) {
         this.emojiTooltip = el;
         this.smile = this.emojiTooltip.parentElement.querySelector('.js-message-smile');
+        this.textarea = this.emojiTooltip.parentElement.querySelector('.js-message-textarea');
+        this.emojisLists = null; // Появятся после AJAX
 
         // Блоки с emojis
         this.allEmojisBlock = this.emojiTooltip.parentElement.querySelector('.js-emoji-tooltip-all-emojis');
@@ -15,6 +17,9 @@ class EmojiTooltip {
         // Книпки переключения emojis
         this.btnAll = this.emojiTooltip.parentElement.querySelector('.js-emoji-tooltip-btn-all');
         this.btnRecent = this.emojiTooltip.parentElement.querySelector('.js-emoji-tooltip-btn-recent');
+
+        // Объект со всеми emojis
+        this.emojis = {};
 
         this.closeEmojiTooltip = true; // Закрытие tooltip?
 
@@ -37,7 +42,7 @@ class EmojiTooltip {
                 switch (receivedData.status) {
                     case 'GET_EMOJI_LIST_SUCCESS':
                         this.allEmojisBlock.innerHTML = this.getEmojiData(receivedData.data, 'allEmojis');
-                        this.setListeners();
+                        this.emojis['allEmojis'] = receivedData.data;
                         break;
                     case 'GET_EMOJI_LIST_FAIL':
                         console.error(receivedData.data.errorMessage);
@@ -61,6 +66,9 @@ class EmojiTooltip {
                 switch (receivedData.status) {
                     case 'GET_RECENT_EMOJI_LIST_SUCCESS':
                         this.recentEmojisBlock.innerHTML = this.getEmojiData(receivedData.data, 'recentEmojis');
+                        this.emojis['recentEmojis'] = receivedData.data;
+                        this.emojisLists = this.emojiTooltip.parentElement.querySelectorAll('.js-emoji-tooltip-list');
+                        this.setListeners();
                         break;
                     case 'GET_RECENT_EMOJI_LIST_FAIL':
                         console.error(receivedData.data.errorMessage);
@@ -114,6 +122,14 @@ class EmojiTooltip {
             });
         });
 
+        this.emojisLists.forEach(emojiList => {
+            emojiList.addEventListener('click', (e) => {
+                if (e.target !== e.currentTarget) {
+                    this.addEmojiToTextArea(e.target);
+                }
+            });
+        })
+
         this.btnAll.addEventListener('click', () => {
             this.toggleEmojisBlock(this.btnAll, this.allEmojisBlockWrapper, this.btnRecent, this.recentEmojisBlockWrapper);
         });
@@ -131,6 +147,7 @@ class EmojiTooltip {
 
         if (!this.emojiTooltip.classList.contains(this.classes.active)) {
             this.emojiTooltip.classList.add(this.classes.visible);
+
             setTimeout(() => {
                 this.emojiTooltip.classList.add(this.classes.active);
             }, 33);
@@ -138,7 +155,7 @@ class EmojiTooltip {
     }
 
     /**
-     * Закрываем emoji tooltip (pause = 200ms)
+     * Закрываем emoji tooltip (pause = 300ms, animation = 200ms)
      */
     closeTooltip() {
         this.closeEmojiTooltip = true;
@@ -154,6 +171,57 @@ class EmojiTooltip {
                 }, 200);
             }
         }, 300);
+    }
+
+    /**
+     * Добавим emoji в textarea 
+     * @param el - выбранный пользователем emoji (DOM-элемент)
+     */
+    addEmojiToTextArea(el) {
+        let emoji = this.getEmoji(el);
+
+        let cursorPosition = this.textarea.selectionStart; // Позиция курсора в textarea
+        this.textarea.value = this.getNewTextareaValue(emoji, cursorPosition);
+
+        // Изменение высоты textarea
+        let textareaHeight = this.textarea.scrollHeight + 2;
+        if (textareaHeight < 200) {
+            this.textarea.style.height = textareaHeight + "px";
+            this.textarea.style.overflow = 'hidden';
+            this.smile.style.right = '8px';
+        } else {
+            this.textarea.style.height = '200px';
+            this.textarea.style.overflow = 'auto';
+            this.smile.style.right = '22px';
+        }
+
+        // Вернём курсор на выбранную пользователем позицию
+        this.textarea.setSelectionRange(cursorPosition + 2, cursorPosition + 2);
+    }
+
+    /**
+     * Найдём emoji, который был выбран
+     * @param selectedEmoji - выбранный пользователем emoji (DOM-элемент)
+     */
+    getEmoji(selectedEmoji) {
+        let type = selectedEmoji.getAttribute('data-type');
+        let part = selectedEmoji.getAttribute('data-part');
+        let value = selectedEmoji.getAttribute('data-value');
+
+        let emoji = this.emojis[type][part]['items'][value];
+
+        return emoji;
+    }
+
+    /**
+     * Получим новое значение value для textarea с учётом положения курсора, добавив emoji
+     * @param emoji - выбранный пользователем emoji (type: str)
+     */
+    getNewTextareaValue(emoji, cursorPosition) {
+        let value = this.textarea.value;
+        let newTextareaValue = value.slice(0, cursorPosition) + emoji + value.slice(cursorPosition);
+
+        return newTextareaValue;
     }
 
     /**
