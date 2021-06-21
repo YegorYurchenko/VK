@@ -1,11 +1,11 @@
 .emoji-tooltip {
     position: absolute;
-    top: calc(-12px - 281px);
+    top: calc(-11px - 282px);
     right: 0;
     display: none;
     opacity: 0;
-    height: 281px;
-    width: 290px;
+    height: 282px;
+    width: 291px;
     border: 1px solid color('gray');
     border-radius: 4px;
     background-color: color('white');
@@ -16,14 +16,13 @@
         content: '';        
         display: block;
         position: absolute;
-        bottom: -9px;
-        right: 13px;
-        height: 16px;
-        width: 16px;
+        bottom: -5.5px;
+        right: 12px;
+        height: 9px;
+        width: 9px;
         background-color: color('gray-lighter');
-        border: 1px solid color('gray');
+        border: 0.5px solid color('gray');
         clip-path: polygon(0% 0%, 100% 100%, 0% 100%);
-        box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
         transform: rotate(-45deg);
         border-radius: 0 0 0 4px;
     }
@@ -45,8 +44,8 @@
         position: relative;
         display: none;
         margin: auto;
-        padding: 4px;
-        height: 245px;
+        padding: 3.5px 4px 4px;
+        height: 244.5px;
         overflow: hidden;
 
         &.is-active {
@@ -64,7 +63,8 @@
     }
 
     &__mainItem-title {
-        margin: 6px 0 5px 5px;
+        margin: 4.5px 0 4px 5px;
+        letter-spacing: 0.8px;
         font-size: 13px;
         color: color('gray-darker');
     }
@@ -74,15 +74,18 @@
         justify-content: flex-start;
         flex-wrap: wrap;
         width: 269px;
-        margin: 0;
+        margin: 2px 0 0 2px;
         cursor: url(/../assets/images/arrow.svg), pointer;
     }
 
     &__mainItem-list-item {
-        margin: 0 1px 0 0;
-        padding: calc((26px - 18.8px) / 2) calc((26px - 18.54px) / 2);
-        width: 26px;
-        height: 26px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 1px 5px 3px 0px;
+        padding: 0;
+        width: 22px;
+        height: 22px;
         font-size: 13.5px;
         list-style: none;
         text-align: center;
@@ -95,22 +98,31 @@
         }
 
         &:nth-child(10n) {
-            margin: 0px;
+            margin: 1px 0 0 0;
         }
     }
 
     &__menu {
         display: flex;
         justify-content: flex-start;
-        height: 34px;
-        width: 100%;
+        height: 36px;
+        width: calc(100% + 1px);
+        border-right: 1px solid #C5D0DB;
         border-radius: 0 0 3px 3px;
         background-color: color('gray-lighter');
     }
 
     &__menu-btn {
-        width: 34px;
-        height: 34px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 35.5px;
+        height: 35.5px;
+
+        &:nth-child(2) {
+            width: 36px;
+        }
         
         &.is-active {
             background-color: color('white');
@@ -119,13 +131,16 @@
 
         &_recent {
             &.is-active {
-            background-color: color('white');
-            border-radius: 0;
-        }
+                background-color: color('white');
+                border-radius: 0;
+            }
         }
     }
 
-    &__menu-all-svg {
+    &__menu-svg {
+        position: absolute;
+        top: 8px;
+        left: calc(50% - 10px);
         fill: color('gray-dark');
         pointer-events: none;
     }
@@ -137,42 +152,10 @@
     overflow-y: auto;
     overflow-x: hidden;
 }
-/*IE*/
-@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-    .scrollable {
-        margin-right: -10px;
-        padding-top: 32px;
-        margin-top: -32px;
-        margin-bottom: -32px;
-        padding-bottom: 32px;
 
-        /* ie scrollbar color properties */
-        scrollbar-base-color: color('white');
-        scrollbar-face-color: color('blue-light');
-        scrollbar-3dlight-color: color('blue-light');
-        scrollbar-highlight-color: color('blue-light');
-        scrollbar-track-color: color('white');
-        scrollbar-arrow-color: color('blue-light');
-        scrollbar-shadow-color: color('blue-light');
-    }
-    
-    .scrollable:after {
-        content: "";
-        height: 32px;
-        display: block;
-    }
-}
 
 /*Edge*/
 @supports (-ms-ime-align:auto)  {
-    .scrollable {
-        margin-right: -10px;
-        padding-top: 16px;
-        margin-top: -16px;
-        margin-bottom: -16px;
-        padding-bottom: 16px;
-    }
-    
     .scrollable:after {
         content: "";
         height: 16px;
@@ -197,10 +180,9 @@
 .scrollable::-webkit-scrollbar-thumb {
     background-color: color('blue-light');
     border-radius: 3px;
-    border: 1px solid transparent;
     background-clip: content-box;
 }
 
 .scrollable::-webkit-scrollbar {
-    width: 6px;
+    width: 6.5px;
 }
