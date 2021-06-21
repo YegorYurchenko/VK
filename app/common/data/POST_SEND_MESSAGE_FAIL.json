@@ -1,0 +1,7 @@
+{
+    "success": true,
+    "status": "POST_SEND_MESSAGE_FAIL.json",
+    "data": {
+        "errorMessage": "Ошибка"
+    }
+}

@@ -1,9 +1,52 @@
 .main {
     display: flex;
+    justify-content: flex-end;
     margin: 48px 0 0;
     height: calc(100% - 71px);
 
     &:last-child {
         padding: 0 0 30px;
+    }
+
+    &__message-area {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-end;
+        margin: 65px 0 0;
+        width: 550px;
+        height: calc(100%);
+        border-left: 1px solid color('gray-border');
+        border-right: 1px solid color('gray-border');
+        background-color: color('white');
+        overflow-y: hidden;
+
+        @media (max-width: grid('md')) {
+            width: 400px;
+        }
+
+        @media (max-width: grid('xs')) {
+            width: 300px;
+        }
+    }
+
+    &__message-area-item {
+        margin: 15px;
+        padding: 8px 16px;
+        max-width: 400px;
+        border-radius: 10px;
+        word-wrap: break-word;
+        font-size: 15px;
+        background-color: color('gray-light');
+
+        @media (max-width: grid('md')) {
+            max-width: 300px;
+            font-size: 14px;
+        }
+
+        @media (max-width: grid('xs')) {
+            max-width: 200px;
+            font-size: 12px;
+        }
     }
 }
