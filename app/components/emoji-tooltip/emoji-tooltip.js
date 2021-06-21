@@ -4,6 +4,7 @@ import { template } from 'underscore';
 class EmojiTooltip {
     constructor(el) {
         this.emojiTooltip = el;
+        this.messengerForm = document.querySelector(".js-message-form");
         this.smile = this.emojiTooltip.parentElement.querySelector(".js-message-smile");
         this.textarea = this.emojiTooltip.parentElement.querySelector(".js-message-textarea");
         this.emojisLists = null; // Появятся после AJAX
@@ -20,6 +21,7 @@ class EmojiTooltip {
 
         this.closeEmojiTooltip = true; // Закрытие tooltip?
         this.borderWidth = 2;
+        this.formDifference = 18;
         this.maxTeaxareaHeight = 200;
 
         this.classes = {
@@ -187,10 +189,12 @@ class EmojiTooltip {
         const textareaHeight = this.textarea.scrollHeight + this.borderWidth;
         if (textareaHeight < this.maxTeaxareaHeight) {
             this.textarea.style.height = `${textareaHeight}px`;
+            this.messengerForm.style.height = `${textareaHeight + this.formDifference}px`;
             this.textarea.style.overflow = "hidden";
             this.smile.style.right = "8px";
         } else {
-            this.textarea.style.height = "200px";
+            this.textarea.style.height = `${this.maxTeaxareaHeight}px`;
+            this.messengerForm.style.height = `${this.maxTeaxareaHeight + this.formDifference}px`;
             this.textarea.style.overflow = "auto";
             this.smile.style.right = "22px";
         }

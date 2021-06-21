@@ -1,6 +1,54 @@
 .message {
-    position: relative;
+    &__form {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        width: 550px;
+        height: 55px;
+        background-color: color('white');
+        border: 1px solid color('gray-border');
+        border-radius: 0 0 8px 8px;
+        background-color: color('white-dark');
 
+        @media (max-width: grid('md')) {
+            width: 400px;
+        }
+
+        @media (max-width: grid('xs')) {
+            width: 300px;
+        }
+    }
+    
+    &__form-enter {
+        position: absolute;
+        bottom: 9px;
+        right: 85px;
+        padding: 5px;
+
+        @media (max-width: grid('md')) {
+            right: 10px;
+        }
+
+        @media (max-width: grid('md')) {
+            right: 10px;
+        }
+    }
+
+    &__form-enter-svg {
+        fill: color('gray-darkest');
+        outline: none;
+
+        &:active {
+            fill: color('black');
+        }
+    }
+
+    &__form-inner {
+        position: relative;
+        margin: 0 0 5px;
+    }
+    
     &__textarea {
         padding: 8px 45px 9px 9px;
         width: 291px;
@@ -15,6 +63,10 @@
         resize: none;
         outline: none;
         overflow: hidden;
+
+        @media (max-width: grid('xs')) {
+            width: 190px;
+        }
 
         &::placeholder {
             color: color('gray-darker');
