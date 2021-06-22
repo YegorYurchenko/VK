@@ -8,17 +8,25 @@ class MessengerBottom {
         
         this.textarea = this.messenger.querySelector(".js-message-textarea");
         this.smile = this.messenger.querySelector(".js-message-smile");
+        this.emojiTooltip = this.messenger.querySelector(".js-emoji-tooltip");
 
         this.borderWidth = 2;
         this.formDifference = 18;
         this.maxTeaxareaHeight = 200;
+
+        this.canToggleEmojiTooltip = true;
+
+        this.classes = {
+            active: "is-active",
+            visible: "is-visible"
+        }
 
         this.init();
         this.setListeners();
     }
 
     /**
-     * Отправка сообщения
+     * Инициализация класса отправки сообщений
      * @returns {void}
      */
     init() {
@@ -26,10 +34,11 @@ class MessengerBottom {
     }
 
     /**
-     * Слушаем событие input и динамически изменяем высоту textarea
+     * Слушаем события
      * @returns {void}
      */
     setListeners() {
+        // Динамически изменяем высоту textarea при необходимости
         this.textarea.addEventListener("input", e => {
             const textarea = e.target;
 
@@ -50,15 +59,98 @@ class MessengerBottom {
             }
         });
 
-        this.messengerFormEnter.addEventListener('click', e => {
+        // Отправка сообщения по button
+        this.messengerFormEnter.addEventListener('click', () => {
             this.sendMessage();
+            this.textarea.focus();
         });
 
+        // Отправка сообщения по Ctrl+Enter
         this.textarea.addEventListener("keydown", e => {
             if (e.ctrlKey && e.keyCode == 13) {
                 this.sendMessage(e);
+
+                if (this.emojiTooltip.classList.contains(this.classes.visible)) {
+                    this.closeEmojiTooltip();
+                }
             }
-        })
+        });
+
+        // Переключение видимости emoji tooltip
+        this.smile.addEventListener("click", () => {
+            this.toggle();
+        });
+
+        // Закрытие emoji tooltip при клике вне блока
+        document.body.addEventListener('click', (e) => {
+            this.handleMilkClick(e);
+        });
+
+        // Доступность emojis с помощью Tab
+        document.body.addEventListener("keydown", e => {
+            if (e.key === "Tab") {
+                e.preventDefault();
+                this.toggle();
+            }
+        });
+    }
+
+    /**
+     * Открываем/закрываем emoji tooltip
+     * @returns {void}
+     */
+    toggle() {
+        if (!this.canToggleEmojiTooltip) return;
+
+        this.canToggleEmojiTooltip = false;
+
+        if (!this.emojiTooltip.classList.contains(this.classes.visible)) {
+            this.openEmojiTooltip();
+        } else {
+            this.closeEmojiTooltip();
+        }
+    }
+
+    /**
+     * Открываем emoji tooltip
+     * @returns {void}
+     */
+    openEmojiTooltip() {
+        this.emojiTooltip.classList.add(this.classes.visible);
+
+        setTimeout(() => {
+            this.emojiTooltip.classList.add(this.classes.active);
+            this.canToggleEmojiTooltip = true;
+        }, 33);
+    }
+
+    /**
+     * Закрываем emoji tooltip
+     * @returns {void}
+     */
+    closeEmojiTooltip() {
+        this.emojiTooltip.classList.remove(this.classes.active);
+
+        setTimeout(() => { // Задержка для плавного скрытия tooltip
+            if (this.closeEmojiTooltip) {
+                this.emojiTooltip.classList.remove(this.classes.visible);
+                this.canToggleEmojiTooltip = true;
+            }
+        }, 200);
+    }
+
+    /**
+     * Закрываем emoji tooltip при клике вне блока
+     * @returns {void}
+     */
+    handleMilkClick(e) {
+        if (
+            e.target !== this.emojiTooltip
+            && !this.emojiTooltip.contains(e.target)
+            && this.emojiTooltip.classList.contains(this.classes.visible)
+        ) {
+            this.toggle();
+        }
     }
 
     /**

@@ -19,7 +19,6 @@ class EmojiTooltip {
         this.btnAll = this.emojiTooltip.parentElement.querySelector(".js-emoji-tooltip-btn-all");
         this.btnRecent = this.emojiTooltip.parentElement.querySelector(".js-emoji-tooltip-btn-recent");
 
-        this.closeEmojiTooltip = true; // Закрытие tooltip?
         this.borderWidth = 2;
         this.formDifference = 18;
         this.maxTeaxareaHeight = 200;
@@ -56,7 +55,7 @@ class EmojiTooltip {
                 console.error(e);
             });
 
-        // Получаем последние emoji
+        // Получаем последние emojis
         axios({
             method: this.emojiTooltip.getAttribute("data-recent-emojis-method") || "get",
             url: this.emojiTooltip.getAttribute("data-recent-emojis-url")
@@ -92,7 +91,7 @@ class EmojiTooltip {
         const tmpl = template(emojiListTemplate.innerHTML);
         let emojis = "";
 
-        data.forEach((itemData, idx) => {
+        data.forEach(itemData => {
             const tmplData = {
                 title: itemData.title || false,
                 items: itemData.items
@@ -109,18 +108,7 @@ class EmojiTooltip {
      * @returns {void}
      */
     setListeners() {
-        [this.smile, this.emojiTooltip].forEach(item => {
-            item.addEventListener("mouseover", () => {
-                this.openTooltop();
-            });
-        });
-
-        [this.smile, this.emojiTooltip].forEach(item => {
-            item.addEventListener("mouseout", () => {
-                this.closeTooltip();
-            });
-        });
-
+        // Отслеживание выбора emoji (все типы)
         this.emojisLists.forEach(emojiList => {
             emojiList.addEventListener("click", (e) => {
                 if (e.target !== e.currentTarget) {
@@ -129,49 +117,15 @@ class EmojiTooltip {
             });
         });
 
+        // Включить вкладку со всеми emojis
         this.btnAll.addEventListener("click", () => {
             this.toggleEmojisBlock(this.btnAll, this.allEmojisBlockWrapper, this.btnRecent, this.recentEmojisBlockWrapper);
         });
 
+        // Включить вкладку с недавними emojis
         this.btnRecent.addEventListener("click", () => {
             this.toggleEmojisBlock(this.btnRecent, this.recentEmojisBlockWrapper, this.btnAll, this.allEmojisBlockWrapper);
         });
-    }
-
-    /**
-     * Открываем emoji tooltip
-     * @returns {void}
-     */
-    openTooltop() {
-        this.closeEmojiTooltip = false;
-
-        if (!this.emojiTooltip.classList.contains(this.classes.active)) {
-            this.emojiTooltip.classList.add(this.classes.visible);
-
-            setTimeout(() => {
-                this.emojiTooltip.classList.add(this.classes.active);
-            }, 33);
-        }
-    }
-
-    /**
-     * Закрываем emoji tooltip (pause = 300ms, animation = 200ms)
-     * @returns {void}
-     */
-    closeTooltip() {
-        this.closeEmojiTooltip = true;
-
-        setTimeout(() => {
-            if (this.closeEmojiTooltip) {
-                this.emojiTooltip.classList.remove(this.classes.active);
-
-                setTimeout(() => { // Задерка для плавного скрытия tooltip
-                    if (this.closeEmojiTooltip) {
-                        this.emojiTooltip.classList.remove(this.classes.visible);
-                    }
-                }, 200);
-            }
-        }, 300);
     }
 
     /**
