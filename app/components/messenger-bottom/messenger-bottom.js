@@ -14,6 +14,8 @@ class MessengerBottom {
         this.formDifference = 18;
         this.maxTeaxareaHeight = 200;
 
+        this.selectedEmoji = null;
+
         this.canToggleEmojiTooltip = true;
 
         this.classes = {
@@ -88,11 +90,75 @@ class MessengerBottom {
 
         // Доступность emojis с помощью Tab
         document.body.addEventListener("keydown", e => {
-            if (e.key === "Tab") {
+            if (e.key === "Tab") { // Открываем/закрываем tooltip
                 e.preventDefault();
                 this.toggle();
+                this.selectedEmoji = null;
+            }
+            else if ( // Двигаемся по emojis
+                ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].indexOf(e.key) >= 0
+                && this.emojiTooltip.classList.contains(this.classes.visible)
+            ) {
+                e.preventDefault();
+                this.emojiTooltipNavigation(e.key);
+            }
+            else if ( // Выбираем emoji и закрывает tooltip
+                e.key === "Enter"
+                && this.emojiTooltip.classList.contains(this.classes.visible)
+            ) {
+                this.toggle();
+                this.selectedEmoji = null;
+            }
+            else { // Сброс последнего выбранного emoji
+                this.selectedEmoji = null;
             }
         });
+    }
+
+    /**
+     * Двигаемся по emojis с помощью клавиатуры
+     * @param {string} arrowDirection - нажатая клавиша (направление движения)
+     * @returns {void}
+     */
+    emojiTooltipNavigation(arrowDirection) {
+        let id = null;
+
+        if (this.selectedEmoji === null) {
+            id = 0;
+            this.selectedEmoji = 0;
+        } else {
+            id = this.selectedEmoji;
+            
+            switch (arrowDirection) {
+                case "ArrowLeft":
+                    id -= 1;
+                    if (id < 0) id = 0;
+                    break;
+
+                case "ArrowRight":
+                    id += 1;
+                    break;
+
+                case "ArrowUp":
+                    id -= 10;
+                    break;
+
+                case "ArrowDown":
+                    id += 10;
+                    if (id < 0) id = 0;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        try {
+            const selectedEmojiBtn = this.messenger.querySelector(`.emoji-tooltip__mainItem-list-item-wrapper[id='${id}']`);
+            selectedEmojiBtn.focus();
+            this.selectedEmoji = id;
+        } catch {
+        }
     }
 
     /**

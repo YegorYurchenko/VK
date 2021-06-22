@@ -19,6 +19,9 @@ class EmojiTooltip {
         this.btnAll = this.emojiTooltip.parentElement.querySelector(".js-emoji-tooltip-btn-all");
         this.btnRecent = this.emojiTooltip.parentElement.querySelector(".js-emoji-tooltip-btn-recent");
 
+        // Объект со всеми emojis
+        this.emojis = {};
+
         this.borderWidth = 2;
         this.formDifference = 18;
         this.maxTeaxareaHeight = 200;
@@ -41,7 +44,8 @@ class EmojiTooltip {
                 const receivedData = response.data;
                 switch (receivedData.status) {
                     case "GET_EMOJI_LIST_SUCCESS":
-                        this.allEmojisBlock.innerHTML = EmojiTooltip.getEmojiData(receivedData.data);
+                        this.allEmojisBlock.innerHTML = EmojiTooltip.getEmojiData(receivedData.data, 'allEmojis');
+                        this.emojis['allEmojis'] = receivedData.data;
                         break;
                     case "GET_EMOJI_LIST_FAIL":
                         console.error(receivedData.data.errorMessage);
@@ -64,7 +68,8 @@ class EmojiTooltip {
                 const receivedData = response.data;
                 switch (receivedData.status) {
                     case "GET_RECENT_EMOJI_LIST_SUCCESS":
-                        this.recentEmojisBlock.innerHTML = EmojiTooltip.getEmojiData(receivedData.data);
+                        this.recentEmojisBlock.innerHTML = EmojiTooltip.getEmojiData(receivedData.data, 'recentEmojis');
+                        this.emojis['recentEmojis'] = receivedData.data;
                         this.emojisLists = this.emojiTooltip.parentElement.querySelectorAll(".js-emoji-tooltip-list");
                         this.setListeners();
                         break;
@@ -86,18 +91,25 @@ class EmojiTooltip {
      * @param {Object} data - данные из AJAX-запроса
      * @returns {string}
      */
-    static getEmojiData(data) {
+    static getEmojiData(data, typeEmojis) {
         const emojiListTemplate = document.getElementById("emoji-list-template");
         const tmpl = template(emojiListTemplate.innerHTML);
         let emojis = "";
 
-        data.forEach(itemData => {
+        let lastIndex = 0; // Для уникальных id
+
+        data.forEach((itemData, idx) => {
             const tmplData = {
+                type: typeEmojis,
+                part: idx,
+                lastIndex,
                 title: itemData.title || false,
                 items: itemData.items
             };
 
             emojis += tmpl(tmplData);
+
+            lastIndex += itemData.items.length;
         });
 
         return emojis;
@@ -134,9 +146,9 @@ class EmojiTooltip {
      * @returns {void}
      */
     addEmojiToTextArea(el) {
-        const emoji = el.innerHTML;
-
+        const emoji = this.getEmoji(el);
         const cursorPosition = this.textarea.selectionStart; // Позиция курсора в textarea
+        
         this.textarea.value = this.getNewTextareaValue(emoji, cursorPosition);
 
         // Изменение высоты textarea
@@ -156,6 +168,30 @@ class EmojiTooltip {
         // Вернём курсор на выбранную пользователем позицию
         this.textarea.focus();
         this.textarea.setSelectionRange(cursorPosition + emoji.length, cursorPosition + emoji.length);
+    }
+
+    /**
+     * Найдём emoji, который был выбран
+     * @param {Object} selectedEmoji - выбранный пользователем emoji
+     */
+    getEmoji(selectedEmoji) {
+        let type, part, value = 0;
+
+        try {
+            const newSelectedEmoji = selectedEmoji.querySelector('.emoji-tooltip__mainItem-list-item');
+
+            type = newSelectedEmoji.getAttribute('data-type');
+            part = newSelectedEmoji.getAttribute('data-part');
+            value = newSelectedEmoji.getAttribute('data-value');
+        } catch {
+            type = selectedEmoji.getAttribute('data-type');
+            part = selectedEmoji.getAttribute('data-part');
+            value = selectedEmoji.getAttribute('data-value');
+        }
+
+        let emoji = this.emojis[type][part]['items'][value];
+
+        return emoji;
     }
 
     /**
