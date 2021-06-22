@@ -21,7 +21,7 @@ class MessengerBottom {
         this.classes = {
             active: "is-active",
             visible: "is-visible"
-        }
+        };
 
         this.init();
         this.setListeners();

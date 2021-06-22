@@ -60,7 +60,7 @@ export default class MessageArea {
         });
 
         const newData = dataList.join('');
-        const result = `<span class="main__message-area-item">${newData}</span>`
+        const result = `<span class="main__message-area-item">${newData}</span>`;
 
         return result;
     }
