@@ -44,7 +44,7 @@ class EmojiTooltip {
                 const receivedData = response.data;
                 switch (receivedData.status) {
                     case "GET_EMOJI_LIST_SUCCESS":
-                        this.allEmojisBlock.innerHTML = EmojiTooltip.getEmojiData(receivedData.data, 'allEmojis');
+                        this.allEmojisBlock.innerHTML = EmojiTooltip.getEmojiData(receivedData.data, 'allEmojis', true);
                         this.emojis['allEmojis'] = receivedData.data;
                         break;
                     case "GET_EMOJI_LIST_FAIL":
@@ -68,7 +68,7 @@ class EmojiTooltip {
                 const receivedData = response.data;
                 switch (receivedData.status) {
                     case "GET_RECENT_EMOJI_LIST_SUCCESS":
-                        this.recentEmojisBlock.innerHTML = EmojiTooltip.getEmojiData(receivedData.data, 'recentEmojis');
+                        this.recentEmojisBlock.innerHTML = EmojiTooltip.getEmojiData(receivedData.data, 'recentEmojis', false);
                         this.emojis['recentEmojis'] = receivedData.data;
                         this.emojisLists = this.emojiTooltip.parentElement.querySelectorAll(".js-emoji-tooltip-list");
                         this.setListeners();
@@ -89,9 +89,11 @@ class EmojiTooltip {
     /**
      * Формируем объекты для каждого блока Emoji и создаём содержимое Tooltip через template
      * @param {Object} data - данные из AJAX-запроса
+     * @param {string} typeEmojis - тип emojis
+     * @param {boolean} needIndex - нужно ли создавать id для emojis
      * @returns {string}
      */
-    static getEmojiData(data, typeEmojis) {
+    static getEmojiData(data, typeEmojis, needIndex) {
         const emojiListTemplate = document.getElementById("emoji-list-template");
         const tmpl = template(emojiListTemplate.innerHTML);
         let emojis = "";
@@ -102,10 +104,12 @@ class EmojiTooltip {
             const tmplData = {
                 type: typeEmojis,
                 part: idx,
-                lastIndex,
+                lastIndex: undefined,
                 title: itemData.title || false,
                 items: itemData.items
             };
+
+            if (needIndex) tmplData.lastIndex = lastIndex;
 
             emojis += tmpl(tmplData);
 
