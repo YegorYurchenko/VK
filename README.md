@@ -2,12 +2,15 @@
 
 ## Общая информация
 
+Можно посмотреть на Github Pages - https://yegoryurchenko.github.io/VK-interactive/
+
 Задание - https://github.com/Chaptykov/VKFrontendTask
 
 Используемые технологии: JavaScript, HTML, SASS, Underscore (template), Axios, Webpack
 
 При работе со сборкой использовался [Node.js](https://nodejs.org/en/) версии [12.16.1](https://nodejs.org/download/release/v12.16.1/)
 
+Доступно для управления с клавиатуры
 
 ## Установка
 
@@ -48,6 +51,6 @@
         * `images` - изображения
         * `js` - скрипты
     * `data` - JSON-файлы для AJAX-запросов
-    * `**/*.html` - главная html-страница
+    * `index.html` - главная html-страница
 * `package.json`
 * `webpack.config.babel.js` - файл конфигурации Webpack
