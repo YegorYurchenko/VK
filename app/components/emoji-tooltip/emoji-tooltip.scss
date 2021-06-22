@@ -2,7 +2,7 @@
     position: absolute;
     top: calc(-11px - 282px);
     right: 0;
-    display: none;
+    visibility: hidden;
     opacity: 0;
     height: 282px;
     width: 291px;
@@ -20,12 +20,12 @@
         content: '';        
         display: block;
         position: absolute;
-        bottom: -5.5px;
+        bottom: -5.3px;
         right: 12px;
         height: 9px;
         width: 9px;
         background-color: color('gray-lighter');
-        border: 0.5px solid color('gray');
+        border: 1px solid color('gray');
         clip-path: polygon(0% 0%, 100% 100%, 0% 100%);
         transform: rotate(-45deg);
         border-radius: 0 0 0 4px;
@@ -40,7 +40,7 @@
     }
     
     &.is-visible {
-        display: block;
+        visibility: visible;
     }
 
     &__inner {
@@ -71,7 +71,7 @@
     }
 
     &__mainItem-title {
-        margin: 4.5px 0 4px 5px;
+        margin: 5px 0 4px 5px;
         letter-spacing: 0.8px;
         font-size: 13px;
         color: color('gray-darker');
@@ -113,7 +113,7 @@
     &__menu {
         display: flex;
         justify-content: flex-start;
-        height: 36px;
+        height: 35.5px;
         width: calc(100% + 1px);
         border-right: 1px solid #C5D0DB;
         border-radius: 0 0 3px 3px;

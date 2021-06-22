@@ -22,7 +22,7 @@
     
     &__form-enter {
         position: absolute;
-        bottom: 9px;
+        bottom: 10px;
         right: 85px;
         padding: 5px;
 
@@ -30,8 +30,8 @@
             right: 10px;
         }
 
-        @media (max-width: grid('md')) {
-            right: 10px;
+        @media (max-width: grid('xs')) {
+            bottom: 8px;
         }
     }
 
@@ -50,7 +50,7 @@
     }
     
     &__textarea {
-        padding: 8px 45px 9px 9px;
+        padding: 9px 45px 8px 9px;
         width: 291px;
         min-height: 37px;
         height: auto;
