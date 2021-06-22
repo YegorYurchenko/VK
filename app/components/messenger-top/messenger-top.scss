@@ -1,7 +1,4 @@
 .messenger-top {
-    position: fixed;
-    top: 48px;
-    left: calc(50% - 275px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,12 +10,10 @@
     border-radius: 8px 8px 0 0;
 
     @media (max-width: grid('md')) {
-        left: calc(50% - 200px);
         width: 400px;
     }
 
     @media (max-width: grid('xs')) {
-        left: calc(50% - 150px);
         width: 300px;
     }
 
