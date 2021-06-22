@@ -86,7 +86,8 @@
         cursor: url(/../assets/images/arrow.svg), pointer;
     }
 
-    &__mainItem-list-item {
+
+    &__mainItem-list-item-wrapper {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -99,9 +100,10 @@
         text-align: center;
         border-radius: 3px;
         background-color: color('white');
+        cursor: inherit;
         transition: background-color 0.1s ease-in-out;
 
-        &:hover {
+        &:hover, &:focus {
             background-color: color('gray-light');
         }
 
