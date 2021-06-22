@@ -29,7 +29,7 @@ class EmojiTooltip {
         this.classes = {
             active: "is-active",
             visible: "is-visible"
-        }
+        };
 
         this.init();
     }
