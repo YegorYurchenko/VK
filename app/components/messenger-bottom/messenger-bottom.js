@@ -69,7 +69,7 @@ class MessengerBottom {
 
         // Отправка сообщения по Ctrl+Enter
         this.textarea.addEventListener("keydown", e => {
-            if (e.ctrlKey && e.keyCode == 13) {
+            if ((e.ctrlKey || e.metaKey) && e.keyCode == 13) {
                 this.sendMessage(e);
 
                 if (this.emojiTooltip.classList.contains(this.classes.visible)) {
