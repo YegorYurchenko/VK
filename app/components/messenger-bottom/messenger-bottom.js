@@ -79,7 +79,11 @@ class MessengerBottom {
         });
 
         // Переключение видимости emoji tooltip
-        this.smile.addEventListener("click", () => {
+        const iOS = navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        let event = "click";
+        if (iOS != null) event = "touchstart";
+
+        this.smile.addEventListener(event, () => {
             this.toggle();
         });
 

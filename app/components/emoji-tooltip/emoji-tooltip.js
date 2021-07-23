@@ -125,8 +125,12 @@ class EmojiTooltip {
      */
     setListeners() {
         // Отслеживание выбора emoji (все типы)
+        const iOS = navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        let event = "click";
+        if (iOS != null) event = "touchstart";
+
         this.emojisLists.forEach(emojiList => {
-            emojiList.addEventListener("click", (e) => {
+            emojiList.addEventListener(event, (e) => {
                 if (e.target !== e.currentTarget) {
                     this.addEmojiToTextArea(e.target);
                 }
